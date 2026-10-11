@@ -1,6 +1,6 @@
 # hall-effect-figure
 
-![A cut-away aluminium macropad: the magnet in the third switch's stem presses down toward the hall sensor, then bounces near the bottom while the display counts six presses with rapid trigger on.](media/hall-effect-switch.gif)
+![A cut-away aluminium macropad: the magnet in the third switch's stem presses down toward the hall sensor, then bounces near the bottom while the display counts six presses with rapid trigger on.](media/hall-effect-switch-dark.gif)
 
 Builds an interactive isometric figure of a hall-effect keyboard switch using the [Anatomy](https://github.com/wheresryan22/anatomy) skill (vendored in `.claude/skills/anatomy`, MIT licensed).
 
@@ -13,6 +13,6 @@ It shows a small three-key aluminium macropad with its front right corner cut aw
 - `figure/model.mjs`: the switch and firmware model (field curve, depth from field, actuation and rapid trigger). Both the page and the build use it.
 - `figure/build.mjs`: the drawing. Run `node figure/build.mjs`, adding `--light` or `--dark` for the fixed-theme pages.
 - `figure/live.js`: the interaction, inlined into the page.
-- `media/hall-effect-switch.gif` and `.mp4`: one 6.6 s loop of the idle tour (light theme), captured frame by frame from the page.
+- `media/hall-effect-switch-dark.gif` / `.mp4` and `media/hall-effect-switch.gif` / `.mp4`: one 6.6 s loop of the idle tour in the dark and light themes, captured frame by frame from the page.
 
 The field comes from the exact on-axis formula for a Ø3 × 2 mm NdFeB magnet (Br 1.2 T), 5.6 mm from the sensing element at rest and 1.6 mm at the bottom. The magnet size and gaps are illustrative, not taken from a particular switch.
