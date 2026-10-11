@@ -76,15 +76,22 @@ export function nextLevel(fw, settings) {
   return fw.on ? fw.ext - settings.rt : fw.ext + settings.rt;
 }
 
-// The idle tour: a full press, five short bounces near the bottom, then a full release.
-export const TOUR = 6.6;
+// The idle tour: a full press, uneven bounces near the bottom, a long lift and a press back down, a rocking
+// half press, a full release and a light tap. Each keyframe is a turn of the finger, so the key eases in and out of it.
+const TOUR_KEYS = [
+  [0, 0], [0.6, 0], [1.0, 4.0], [1.3, 4.0], [1.55, 3.2], [1.8, 4.0], [1.98, 3.65], [2.16, 3.95], [2.55, 2.3],
+  [2.9, 3.85], [3.08, 3.5], [3.3, 4.0], [3.8, 1.3], [4.2, 3.1], [4.38, 2.7], [4.56, 3.3], [4.72, 2.95], [5.15, 0],
+  [5.55, 0], [5.75, 0.7], [5.95, 0], [6.15, 0.45], [6.35, 0], [7.2, 0],
+];
+export const TOUR = TOUR_KEYS[TOUR_KEYS.length - 1][0];
 const ease = (u) => (u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u));
 export function tourAt(t) {
-  if (t < 0.8) return 0;
-  if (t < 1.25) return HE.travel * ease((t - 0.8) / 0.45);
-  if (t < 1.75) return HE.travel;
-  if (t < 4.25) return HE.travel - 0.45 * (1 - Math.cos(2 * Math.PI * (((t - 1.75) / 0.5) % 1)));
-  if (t < 4.45) return HE.travel;
-  if (t < 4.85) return HE.travel * (1 - ease((t - 4.45) / 0.4));
+  for (let i = 1; i < TOUR_KEYS.length; i++) {
+    const [t1, d1] = TOUR_KEYS[i];
+    if (t <= t1) {
+      const [t0, d0] = TOUR_KEYS[i - 1];
+      return d0 + (d1 - d0) * ease((t - t0) / (t1 - t0));
+    }
+  }
   return 0;
 }
